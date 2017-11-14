@@ -36,7 +36,6 @@ static int my_close(struct inode *i, struct file *f)
 static ssize_t my_read(struct file *f, char __user *buffer, size_t len,loff_t *off)
 {
 	int error_count = 0;
-
 	error_count = copy_to_user(buffer, message, msg_len);
 	if (error_count == 0) {
 		printk(KERN_INFO "Driver: read %d char\n", msg_len);
@@ -50,11 +49,19 @@ static ssize_t my_read(struct file *f, char __user *buffer, size_t len,loff_t *o
 }
 static ssize_t my_write(struct file *f, const char __user *buffer, size_t len,loff_t *off)
 {
-
-	sprintf(message, "%s", buffer);
+/*	sprintf(message, "%s", buffer);
 	msg_len = strlen(message);
-	printk(KERN_INFO "Driver: write() %lu char\n", len);
-	return len;
+*/
+	int error_count = 0;
+	error_count = copy_from_user(message, buffer, len);
+	if (error_count == 0) {
+		msg_len = strlen(message);
+		printk(KERN_INFO "Driver: write() %lu char\n", len);
+		return len;
+	} else {
+		printk(KERN_INFO "Fail to read %d char\n", error_count);
+		return -EFAULT;
+	}
 }
 static struct file_operations my_fop =
 {
