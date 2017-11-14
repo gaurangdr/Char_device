@@ -1,0 +1,5 @@
+1. major minor number generate and register (alloc_chrdev_region)
+2. class create (class_create)
+3. device create (device_create)
+4. device init (cdev_init)
+5. device add (cdev_add)
