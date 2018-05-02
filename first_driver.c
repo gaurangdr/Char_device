@@ -1,5 +1,5 @@
 #include<linux/module.h> 
-#include<linux/kernel.h> /* printk */
+#include<linux/kernel.h> /*  printk */
 #include<linux/types.h> /* dev_t */
 #include<linux/kdev_t.h> /* major, minor number macro */
 #include<linux/fs.h> /* register number */
